@@ -1,5 +1,5 @@
  import React from "react";
-import { motion } from "framer-motion"; // Import framer-motion
+import { motion, Variants } from "framer-motion";
 
 // Image Imports
 import offline from "../../assets/offline_counseling.png";
@@ -7,7 +7,7 @@ import online from "../../assets/online_counselling.png";
 import phoneCall from "../../assets/phoneCall_counselling.png";
 import chat from "../../assets/text_counselling.png";
 
-// Data for counseling modes
+// Counseling data
 const counseling = [
   {
     id: 1,
@@ -43,25 +43,25 @@ const counseling = [
   },
 ];
 
-// Animation variants for the container (grid)
-const containerVariants = {
+// Container animation
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1, // Animate children one by one
+      staggerChildren: 0.1,
     },
   },
 };
 
-// Animation variants for each card
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 }, // Start invisible and 20px down
+// Card animation
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
-    y: 0, // Animate to visible and original position
+    y: 0,
     transition: {
-      type: "spring",
+      type: "spring" as const, // TS-safe
       stiffness: 100,
     },
   },
@@ -69,41 +69,42 @@ const cardVariants = {
 
 const CounselingMode: React.FC = () => {
   return (
-    // Section wrapper with padding and a light background
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <div className="text-center mb-12">
           <h2 className="font-bold text-black text-3xl md:text-4xl">
-            Our <span className="  text-red-500 ">Counseling</span> Mode
+            Our <span className="text-red-500">Counseling</span> Mode
           </h2>
         </div>
 
-        {/* Responsive Grid Container with Framer Motion */}
+        {/* Grid container */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible" // Animate when the element enters the viewport
-          viewport={{ once: true }} // Only animate once
+          whileInView="visible"
+          viewport={{ once: true }}
         >
-          {/* Map over the counseling data to create cards */}
           {counseling.map((mode) => (
             <motion.div
               key={mode.id}
               className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-all duration-300"
-              variants={cardVariants} // Apply card animation
-              whileHover={{ scale: 1.05, shadow: "xl" }} // Animate on hover
+              variants={cardVariants}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0px 10px 15px rgba(0,0,0,0.1)",
+              }}
             >
               {/* Card Image */}
               <img
                 src={mode.image}
                 alt={mode.name}
-                className="w-full h-48 object-cover" // Fixed height and object-cover
+                className="w-full h-48 object-cover"
               />
 
               {/* Card Content */}
-              <div className="p-6 flex flex-col flex-grow"> {/* flex-grow ensures all cards are the same height */}
+              <div className="p-6 flex flex-col flex-grow">
                 <div className="flex items-center mb-4">
                   <span
                     className="text-3xl mr-3"
@@ -116,9 +117,7 @@ const CounselingMode: React.FC = () => {
                     {mode.name}
                   </h3>
                 </div>
-                <p className="text-gray-600 text-sm">
-                  {mode.shortDescription}
-                </p>
+                <p className="text-gray-600 text-sm">{mode.shortDescription}</p>
               </div>
             </motion.div>
           ))}
