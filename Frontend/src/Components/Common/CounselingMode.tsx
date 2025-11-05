@@ -1,5 +1,4 @@
  import React from "react";
-import { motion, Variants } from "framer-motion";
 
 // Image Imports
 import offline from "../../assets/offline_counseling.png";
@@ -8,7 +7,15 @@ import phoneCall from "../../assets/phoneCall_counselling.png";
 import chat from "../../assets/text_counselling.png";
 
 // Counseling data
-const counseling = [
+interface Counseling {
+  id: number;
+  name: string;
+  icon: string;
+  image: string;
+  shortDescription: string;
+}
+
+const counseling: Counseling[] = [
   {
     id: 1,
     name: "Offline Counseling",
@@ -43,30 +50,6 @@ const counseling = [
   },
 ];
 
-// Container animation
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-// Card animation
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring" as const, // TS-safe
-      stiffness: 100,
-    },
-  },
-};
-
 const CounselingMode: React.FC = () => {
   return (
     <section className="py-16 bg-gray-50">
@@ -79,22 +62,11 @@ const CounselingMode: React.FC = () => {
         </div>
 
         {/* Grid container */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {counseling.map((mode) => (
-            <motion.div
+            <div
               key={mode.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-all duration-300"
-              variants={cardVariants}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0px 10px 15px rgba(0,0,0,0.1)",
-              }}
+              className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-transform duration-300 hover:scale-105"
             >
               {/* Card Image */}
               <img
@@ -119,9 +91,9 @@ const CounselingMode: React.FC = () => {
                 </div>
                 <p className="text-gray-600 text-sm">{mode.shortDescription}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
