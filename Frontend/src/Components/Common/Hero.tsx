@@ -1,5 +1,6 @@
  import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import heroImage from '../../assets/Hero_image.png' 
 
 function Hero() {
   return (
@@ -36,9 +37,9 @@ function Hero() {
         {/* Right Image */}
         <div className="flex-1 flex justify-center">
           <img
-            src="https://img.freepik.com/free-photo/psychologist-consulting-patient-office_1157-41027.jpg?t=st=1730710000~exp=1730713600~hmac=b9638fa9369ffb7e477fc98960c469326ee0b781c8f18292c3801e7ddc3a41eb&w=1380"
+            src={heroImage}
             alt="Therapist and patient"
-            className="rounded-2xl shadow-lg w-full max-w-md md:max-w-lg object-cover"
+            className="rounded-2xl   w-full max-w-md md:max-w-lg object-cover"
           />
         </div>
       </div>
